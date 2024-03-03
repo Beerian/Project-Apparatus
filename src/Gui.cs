@@ -8,6 +8,7 @@ using UnityEngine;
 using static GameObjectManager;
 using static LocalizationManager;
 using System.Windows.Forms;
+using System.IO;
 
 namespace ProjectApparatus
 {
@@ -822,10 +823,15 @@ namespace ProjectApparatus
                         } break;
                     case UI.Tabs.Theme: 
                         {
+                            string themeDirectoryPath = Path.Combine(UnityEngine.Application.persistentDataPath, "Project Apparatus", "Themes");
+                            if (!Directory.Exists(themeDirectoryPath))
+                            {
+                                Directory.CreateDirectory(themeDirectoryPath);
+                            }
                             if (ThemeManager.GetThemes().Count == 0)
                             {
-                                GUILayout.Label($"Put themes into the following path to use this feature: {UnityEngine.Application.persistentDataPath}/Project Apparatus/Themes/");
-                                break; //return after showing label
+                                GUILayout.Label($"Put themes into the following path to use this feature: {themeDirectoryPath}");
+                                break;
                             }
                             scrollPos = GUILayout.BeginScrollView(scrollPos);
                             if (GUILayout.Button("Default Unity"))
